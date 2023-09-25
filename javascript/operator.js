@@ -1,3 +1,5 @@
+'use strict';
+
 console.log('my' + 'cat');
 console.log('1' + 2);
 console.log(`string literals: 

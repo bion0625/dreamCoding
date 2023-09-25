@@ -1,6 +1,6 @@
 'use strict';
 
-//block scopt
+//block scope
 {
     let name = 'uj';
     console.log(name);
@@ -13,7 +13,7 @@ console.log(name);
 age = 4;
 var age;
 
-//var non block scopt
+//var non block scope
 console.log(num);
 {
     num = 5;

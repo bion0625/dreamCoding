@@ -40,6 +40,8 @@ const calculate = (comment, a, b) => {
         case 'remiander':
             result = a%b;
             break;
+        default:
+            throw Error(`unknown command`);
     }
     console.log(result);
 }
@@ -49,3 +51,4 @@ calculate('substract', 1, 2);
 calculate('divide', 1, 2);
 calculate('multiply', 1, 2);
 calculate('remiander', 5, 5);
+calculate('unknown', 5, 5);

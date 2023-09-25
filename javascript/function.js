@@ -21,3 +21,31 @@ printAgain();
 (function hello(){
     console.log('hello');
 })();
+
+const calculate = (comment, a, b) => {
+    let result;
+    switch(comment){
+        case 'add':
+            result = a+b;
+            break;
+        case 'substract':
+            result = a-b;
+            break;
+        case 'divide':
+            result = a/b;
+            break;
+        case 'multiply':
+            result = a*b;
+            break;
+        case 'remiander':
+            result = a%b;
+            break;
+    }
+    console.log(result);
+}
+
+calculate('add', 1, 2);
+calculate('substract', 1, 2);
+calculate('divide', 1, 2);
+calculate('multiply', 1, 2);
+calculate('remiander', 5, 5);

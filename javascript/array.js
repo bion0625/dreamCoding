@@ -130,14 +130,14 @@ const students = [
 
 // Q8. check if there is a student with the score lower than 50
 {
-    const check = students.every((student) => student.score > 50);
+    const check = students.some((student) => student.score < 50);
     console.log(check);
 }
 
 // Q9. compute students' average score
 {
-    // const total = students.reduce((a, b) => a.score + b.score)
-    // console.log(averageScore);????
+    const result = students.reduce((prev, curr) => prev + curr.score, 0)/students.length;
+    console.log(result);
 }
 
 // Q10. make a string containing all the scores
@@ -150,6 +150,9 @@ const students = [
 // Bonus! do Q10 sorted in ascending order
 // result should be: '45, 66, 80, 88, 90'
 {
-    const sortStudents = students.sort((a, b) => a.score - b.score);
-    console.log(sortStudents);
+    const result = students
+        .map(student => student.score)
+        .sort((a, b) => a - b)
+        .join();
+    console.log(result);
 }

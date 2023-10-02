@@ -17,4 +17,23 @@ router.get('/', (req, res) => {
     res.json(tweets);
 });
 
+router.post('/', (req, res) => {
+    const { body: {tweet}} = req;
+    tweets.unshift(tweet);
+    res.status(201).send('success');
+});
+
+router.delete('/:id', (req, res) => {
+    const {params: {id}} = req;
+    tweets = tweets.filter(tweet => String(tweet.id) !== String(id));
+    res.status(204).send('success');
+});
+
+router.put('/:id', (req, res) => {
+    const {params: {id}, body: {text}} = req;
+    const tweet = tweets.find(tweet => String(tweet.id) === String(id));
+    tweet.text = text;
+    res.status(200).send('success');
+})
+
 export default router;

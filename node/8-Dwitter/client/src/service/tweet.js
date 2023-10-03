@@ -10,7 +10,7 @@ export default class TweetService {
       headers: {'Content-Type': 'application/json'},
     });
     const data = await response.json();
-    if(response.status != 200){
+    if(response.status !== 200){
       throw new Error(data.message);
     }
     return data;
@@ -23,7 +23,7 @@ export default class TweetService {
       body: JSON.stringify({text, username: 'ellie', name: 'Ellie'})
     });
     const data = await response.json();
-    if(response.status != 201){
+    if(response.status !== 201){
       throw new Error(data.message);
     }
     return data;
@@ -34,7 +34,7 @@ export default class TweetService {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json'},
     });
-    if(response.status != 204){
+    if(response.status !== 204){
       throw new Error();
     }
   }
@@ -46,7 +46,7 @@ export default class TweetService {
       body: JSON.stringify({text})
     });
     const data = await response.json();
-    if(response.status != 200){
+    if(response.status !== 200){
       throw new Error(data.message);
     }
     return data;

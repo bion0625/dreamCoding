@@ -7,8 +7,8 @@ app.use(express.json());
 
 const validate= (req, res, next) => {
     const errors = validationResult(req);
-    if(!errors.isEmpty){
-        next();
+    if(errors.isEmpty()){
+        return next();
     }
     return res.status(400).json({ message: errors.array()[0].msg })
 };
@@ -23,7 +23,6 @@ app.post(
     ],
     validate,
     (req, res, next) => {
-    console.log(req.body);
     // if(req.body.email..){
     //     res.status(400).send({ message: 'email!!!' })
     // } else if() ...
@@ -35,7 +34,7 @@ app.get('/:email',
     validate,
     (req, res, next) => {
     res.send('❤');
-})
+});
 
 
 app.listen(8080);

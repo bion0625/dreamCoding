@@ -31,6 +31,6 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     console.error(error);
     res.sendStatus(500);
-})
+});
 
 app.listen(8080);

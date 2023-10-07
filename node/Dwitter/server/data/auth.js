@@ -1,10 +1,21 @@
-let users = [];
+//sample password : 12345
+let users = [
+    {
+        id: '1',
+        username: 'sample',
+        password: '$2b$12$dIbhY45XjN2WUrJ1LaR2Z.2oJFauFzdz5SHD/40uGe1RRJMbM3p.S',
+        name: 'euijung',
+        email: 'euijung@gmail.com',
+        url: 'http://test.com',
+    },
+];
 
-export const signup = (user) => {
-    users.push(user);
-    return;
+export const createUser = async (user) => {
+    const created = {...user, id:Date.now().toString()};
+    users.push(created);
+    return created.id;
 };
 
-export const getByUsername = (username) => {
+export const findByUsername = (username) => {
     return users.find(user => user.username === username);
 };

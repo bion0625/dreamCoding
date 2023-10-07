@@ -1,16 +1,9 @@
 import express from 'express';
 import * as authController from '../controller/auth.js';
-import { body, validationResult } from 'express-validator';
+import { body } from 'express-validator';
+import { validate } from '../middleware/validator.js';
 
 const router = express.Router();
-
-const validator = (req, res, next) => {
-    const errors = validationResult(req);
-    if(errors.isEmpty()){
-        return next();
-    }
-    return res.json({msg : errors.array().reduce((a, b) => `${b.msg} / ${a}`, "")});
-};
 
 const validateCredential = [
     body('username')
@@ -21,7 +14,7 @@ const validateCredential = [
         .trim()
         .isLength({min:5})
         .withMessage('password should be at least 5 characters'), 
-    validator,
+    validate,
 ]
 
 const validateSignup = [
@@ -31,14 +24,14 @@ const validateSignup = [
     body('url')
         .isURL().withMessage('Invalid URL')
         .optional({nullable: true, checkFalsy: true}), 
-    validator,
+    validate,
 ];
 
 router.post('/signup', validateSignup, authController.signup);
 
 router.post('/login', validateCredential, authController.login);
 
-router.get('/me', body('username').trim().isLength({min:2}).withMessage('Id is too short'), validator, authController.validation);
+router.get('/me', body('username').trim().isLength({min:2}).withMessage('Id is too short'), validate, authController.validation);
 
 
 export default router;

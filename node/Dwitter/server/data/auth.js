@@ -10,6 +10,10 @@ let users = [
     },
 ];
 
+export const findById = async (id) => {
+    return users.find(user => user.id === id);
+}
+
 export const createUser = async (user) => {
     const created = {...user, id:Date.now().toString()};
     users.push(created);

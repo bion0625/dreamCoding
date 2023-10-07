@@ -2,6 +2,7 @@ import express from 'express';
 import * as authController from '../controller/auth.js';
 import { body } from 'express-validator';
 import { validate } from '../middleware/validator.js';
+import { isAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -31,7 +32,7 @@ router.post('/signup', validateSignup, authController.signup);
 
 router.post('/login', validateCredential, authController.login);
 
-router.get('/me', body('username').trim().isLength({min:2}).withMessage('Id is too short'), validate, authController.validation);
+router.get('/me', isAuth, authController.me);
 
 
 export default router;

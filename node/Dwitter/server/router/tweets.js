@@ -3,6 +3,7 @@ import 'express-async-error';
 import { body, param, query } from 'express-validator';
 import * as tweetController from '../controller/tweets.js';
 import { validate } from '../middleware/validator.js';
+import { isAuth } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -13,24 +14,26 @@ const validateTweet = [
 
 // GET /tweets
 // GET /tweets?username=username
-router.get('/', tweetController.getTweets);
+router.get('/', isAuth, tweetController.getTweets);
 
 // GET /tweets/:id
-router.get('/:id', param('id').trim().isInt().withMessage('유효한 아이디가 아닙니다'), validate, tweetController.getTweet)
+router.get('/:id', isAuth, param('id').trim().isInt().withMessage('유효한 아이디가 아닙니다'), validate, tweetController.getTweet)
 
 // POST /tweets
 router.post(
     '/', 
+    isAuth,
     validateTweet,
     tweetController.createTweet);
 
 // PUT /tweets/:id
 router.put(
     '/:id', 
+    isAuth,
     validateTweet,
     tweetController.updateTweet);
 
 // DELETE /tweets/:id
-router.delete('/:id',param('id').trim().isInt().withMessage('유효한 아이디가 아닙니다'), validate, tweetController.deletTweet);
+router.delete('/:id', isAuth, param('id').trim().isInt().withMessage('유효한 아이디가 아닙니다'), validate, tweetController.deletTweet);
 
 export default router;

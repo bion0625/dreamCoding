@@ -43,24 +43,10 @@ export const login = async (req, res) => {
     res.status(200).json({token, username});
 };
 
-export const validation = (req, res) => {
-    const {
-        headers: { authorization },
-        body: { username },
-    } = req;
-    const user = userRepository.findByUsername(username);
-    if(!user){
-        return res.json({msg:"not found account"});
+export const me = async (req, res) => {
+    const user = await userRepository.findById(req.userId);
+    if (!user){
+        return res.status(404).json({ message: 'User not found' });
     }
-    jwt.verify(authorization, jwtSecretKey, (err, decoded) => {
-        if(err){
-            console.error(err);
-            return res.json({msg:"can not access"});
-        }
-        if(user.name !== decoded.name || user.username !== decoded.username 
-            || user.email !== decoded.email || user.url !== decoded.url){
-                return res.json({msg:"can not access"});
-        }
-        res.json({username, token: authorization});
-    });
+    res.status(200).json({ token: req.token, username: user.username });
 };

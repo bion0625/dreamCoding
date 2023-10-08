@@ -3,7 +3,7 @@ import { db } from "../db/database.js";
 export const findById = async (id) => {
     return db.execute(`select id, username, password, name, email, url from users u where u.id = ?`, [id])
     .then(result => result[0][0]);
-}
+};
 
 export const createUser = async (user) => {
     const {username, password, name, email, url} = user;

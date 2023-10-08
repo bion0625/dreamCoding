@@ -25,18 +25,31 @@ export const createTweet = async (req, res) => {
 };
 
 export const updateTweet = async (req, res) => {
-    const {params: {id}, body: {text}} = req;
+    const {params: {id}, body: {text}, userId} = req;
+    const get = await tweetRepository.getById(id);
+    if(!get){
+        return res.status(404).json({ message: `Tweet id(${id}) not found` });
+    }else if(get.userId !== userId){
+        return res.status(404).json({ message: `Tweet id(${id}) is not yours` });
+    }
+
     const tweet = await tweetRepository.update(id, text);
     if(tweet){
         tweet.text = text;
-        res.status(200).json(tweet);
+        return res.status(200).json(tweet);
     }else{
-        res.status(404).json({ message: `Tweet id(${id}) not found` });
+        return res.status(404).json({ message: `Tweet id(${id}) not found` });
     }
 };
 
 export const deletTweet = async (req, res) => {
-    const {params: {id}} = req;
+    const {params: {id}, userId} = req;
+    const get = await tweetRepository.getById(id);
+    if(!get){
+        return res.status(404).json({ message: `Tweet id(${id}) not found` });
+    }else if(get.userId !== userId){
+        return res.status(404).json({ message: `Tweet id(${id}) is not yours` });
+    }
     await tweetRepository.remove(id);
-    res.sendStatus(204);
+    return res.sendStatus(204);
 };

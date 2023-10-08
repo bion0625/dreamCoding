@@ -26,29 +26,23 @@ export const createTweet = async (req, res) => {
 
 export const updateTweet = async (req, res) => {
     const {params: {id}, body: {text}, userId} = req;
-    const get = await tweetRepository.getById(id);
-    if(!get){
-        return res.status(404).json({ message: `Tweet id(${id}) not found` });
-    }else if(get.userId !== userId){
-        return res.status(404).json({ message: `Tweet id(${id}) is not yours` });
+    const tweet = await tweetRepository.getById(id);
+    if(!tweet){
+        return res.sendStatus(404);
+    }else if(tweet.userId !== userId){
+        return res.sendStatus(403);
     }
-
-    const tweet = await tweetRepository.update(id, text);
-    if(tweet){
-        tweet.text = text;
-        return res.status(200).json(tweet);
-    }else{
-        return res.status(404).json({ message: `Tweet id(${id}) not found` });
-    }
+    const updated = await tweetRepository.update(id, text);
+    return res.status(200).json(updated);
 };
 
 export const deletTweet = async (req, res) => {
     const {params: {id}, userId} = req;
-    const get = await tweetRepository.getById(id);
-    if(!get){
-        return res.status(404).json({ message: `Tweet id(${id}) not found` });
-    }else if(get.userId !== userId){
-        return res.status(404).json({ message: `Tweet id(${id}) is not yours` });
+    const tweet = await tweetRepository.getById(id);
+    if(!tweet){
+        return res.sendStatus(404);
+    }else if(tweet.userId !== userId){
+        return res.sendStatus(403);
     }
     await tweetRepository.remove(id);
     return res.sendStatus(204);

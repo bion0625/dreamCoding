@@ -8,6 +8,14 @@ let users = [
         email: 'euijung@gmail.com',
         url: 'http://test.com',
     },
+    {
+        id: '2',
+        username: 'sampleb',
+        password: '$2b$12$dIbhY45XjN2WUrJ1LaR2Z.2oJFauFzdz5SHD/40uGe1RRJMbM3p.S',
+        name: 'bob',
+        email: 'euijung@gmail.com',
+        url: 'http://test.com',
+    },
 ];
 
 export const findById = async (id) => {

@@ -1,33 +1,21 @@
-//sample password : 12345
-let users = [
-    {
-        id: '1',
-        username: 'sample',
-        password: '$2b$12$dIbhY45XjN2WUrJ1LaR2Z.2oJFauFzdz5SHD/40uGe1RRJMbM3p.S',
-        name: 'euijung',
-        email: 'euijung@gmail.com',
-        url: 'http://test.com',
-    },
-    {
-        id: '2',
-        username: 'sampleb',
-        password: '$2b$12$dIbhY45XjN2WUrJ1LaR2Z.2oJFauFzdz5SHD/40uGe1RRJMbM3p.S',
-        name: 'bob',
-        email: 'euijung@gmail.com',
-        url: 'http://test.com',
-    },
-];
+import { db } from "../db/database.js";
 
 export const findById = async (id) => {
-    return users.find(user => user.id === id);
+    return db.execute(`select id, username, password, name, email, url from users u where u.id = ?`, [id])
+    .then(result => result[0][0]);
 }
 
 export const createUser = async (user) => {
-    const created = {...user, id:Date.now().toString()};
-    users.push(created);
-    return created.id;
+    const {username, password, name, email, url} = user;
+    return db
+    .execute(`insert into users (username, password, name, email, url) values (?,?,?,?,?)`, [
+        username, password, name, email, url
+    ])
+    .then(result => result[0].insertId);
 };
 
-export const findByUsername = (username) => {
-    return users.find(user => user.username === username);
+export const findByUsername = async (username) => {
+    return db
+    .execute(`select id, username, password, name, email, url from users u where u.username = ?`, [username])
+    .then(result => result[0][0]);
 };

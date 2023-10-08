@@ -7,7 +7,7 @@ const createJwtToken =id => jwt.sign({id}, config.jwt.secretKey, {expiresIn: con
 
 export const signup = async (req, res) => {
     const { username, password, name, email, url} = req.body;
-    const found = userRepository.findByUsername(username);
+    const found = await userRepository.findByUsername(username);
     if(found){
         return res.status(409).json({ message: `${username} already exists` })
     }
@@ -28,7 +28,7 @@ export const login = async (req, res) => {
         username,
         password
     }} = req;
-    const user = userRepository.findByUsername(username);
+    const user = await userRepository.findByUsername(username);
     if(!user){
         return res.status(401).json({message:"Invalid user or password"});
     }

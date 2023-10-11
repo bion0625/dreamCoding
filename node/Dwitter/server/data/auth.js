@@ -1,8 +1,8 @@
 import SQ from 'sequelize';
-import { squelize } from "../db/database.js";
+import { sequelize } from "../db/database.js";
 const DataTypes = SQ.DataTypes;
 
-const User = squelize.define('user', {
+export const User = sequelize.define('user', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -31,7 +31,6 @@ const User = squelize.define('user', {
 );
 
 export const findById = async (id) => {
-    console.log(id);
     return User.findByPk(id);
 };
 

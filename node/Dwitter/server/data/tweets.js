@@ -1,76 +1,32 @@
-// import SQ from 'sequelize';
-// import { sequelize } from '../db/database.js';
-// import { User } from './auth.js';
-// const DataTypes = SQ.DataTypes;
+import SQ from 'sequelize';
+import { getTweets, sequelize } from '../db/database.js';
+import { ObjectId } from 'mongodb';
+import { findById } from './auth.js';
 
-// const Tweets = sequelize.define('tweet', {
-//     id: {
-//         type: DataTypes.INTEGER,
-//         autoIncrement: true,
-//         allowNull: false,
-//         primaryKey: true,
-//     },
-//     text: {
-//         type: DataTypes.TEXT,
-//         allowNull: false,
-//     },
-// });
-// Tweets.belongsTo(User);
+export async function getAll(){
+    return getTweets().find().toArray();
+}
 
-// const Sequelize = SQ.Sequelize;
+export async function getAllByUsername(username){
+    return getTweets().find({username}).toArray();
+}
 
-// const INCLUDE_USER = {
-//     attributes: [
-//         'id', 
-//         'text', 
-//         'createdAt', 
-//         'userId', 
-//         [Sequelize.col('user.name'), 'name'],
-//         [Sequelize.col('user.username'), 'username'],
-//         [Sequelize.col('user.url'), 'url'],
-//     ],
-//     include: {
-//         model: User,
-//         attributes: [],
-//     },
-// };
+export async function getById(id){
+    return getTweets().findOne({_id:new ObjectId(id)});
+}
 
-// const ORDER_DESC = {
-//     order: [['createdAt', 'DESC']],
-// };
+export async function create(text, userId){
+    const {username, name, url} = await findById(userId);
+    return getTweets().insertOne({text, userId, username, name, url}).then(data => {
+        return getById(data.insertedId.toString());
+    });
+}
 
-// export async function getAll(){
-//     return Tweets.findAll({...INCLUDE_USER, ...ORDER_DESC});
-// }
+export async function update(id, text){
+    return getTweets().findOneAndUpdate({_id:new ObjectId(id)}, {$set: {text}})
+        .then(data => getById(data._id))
+}
 
-// export async function getAllByUsername(username){
-//     return Tweets.findAll({...INCLUDE_USER, ...ORDER_DESC, include: {
-//         ...INCLUDE_USER.include, where: {username}
-//     }});
-// }
-
-// export async function getById(id){
-//     return Tweets.findOne({
-//         where: {id},
-//         ...INCLUDE_USER,
-//     });
-// }
-
-// export async function create(text, userId){
-//     return Tweets.create({text, userId}).then(data => this.getById(data.dataValues.id));
-// }
-
-// export async function update(id, text){
-//     return Tweets.findByPk(id, INCLUDE_USER)
-//         .then(tweet => {
-//             tweet.text = text;
-//             return tweet.save();
-//         });
-// }
-
-// export async function remove(id){
-//     return Tweets.findByPk(id)
-//         .then(tweet => {
-//             tweet.destroy();
-//         })
-// }
+export async function remove(id){
+    getTweets().deleteOne({_id:new ObjectId(id)});
+}

@@ -3,7 +3,6 @@ import { getUsers } from "../db/database.js";
 
 const ObjectId = MongoDB.ObjectId;
 export const findById = async (id) => {
-    console.log(id);
     return getUsers().findOne({_id: new ObjectId(id)})
         .then(mapOptionalUser);
 };

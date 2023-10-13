@@ -31,7 +31,7 @@ export const updateTweet = async (req, res) => {
     const tweet = await tweetRepository.getById(id);
     if(!tweet){
         return res.sendStatus(404);
-    }else if(tweet.userId !== userId){
+    }else if(tweet.userId.toString() !== userId.toString()){
         return res.sendStatus(403);
     }
     const updated = await tweetRepository.update(id, text);
@@ -43,7 +43,7 @@ export const deletTweet = async (req, res) => {
     const tweet = await tweetRepository.getById(id);
     if(!tweet){
         return res.sendStatus(404);
-    }else if(tweet.userId !== userId){
+    }else if(tweet.userId.toString() !== userId.toString()){
         return res.sendStatus(403);
     }
     await tweetRepository.remove(id);

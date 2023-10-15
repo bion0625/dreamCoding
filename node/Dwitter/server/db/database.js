@@ -12,17 +12,3 @@ export const useVirtualId = (userSchema) => {
   userSchema.set('toJSON', {virtuals: true});
   userSchema.set('toObject', {virtuals: true});
 }
-
-
-
-//todo euijung: delete
-
-let db;
-
-export const getUsers = () => {
-  return db.collection('users');
-};
-
-export const getTweets = () => {
-  return db.collection('tweets');
-};

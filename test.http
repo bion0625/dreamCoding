@@ -1,0 +1,74 @@
+post http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+    "username" : "test1234567",
+    "name" : "uj",
+    "email" : "test@test.com",
+    "password":"12345"
+}
+
+###
+
+post http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "username" : "test321",
+    "password":"abc12345"
+}
+
+###
+
+http://localhost:8080/auth/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+{
+    "username": "test321"
+}
+
+###
+
+http://localhost:8080/tweets/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+###
+
+http://localhost:8080/tweets/652c7766bb5f89a24d35090a
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+###
+
+put http://localhost:8080/tweets/652c7766bb5f89a24d35090a
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+{
+    "text" : "update !!!"
+}
+
+###
+
+http://localhost:8080/tweets/?username=test321
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+###
+
+
+post http://localhost:8080/tweets/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs
+
+{
+    "text": "text10"
+}
+
+###
+
+delete http://localhost:8080/tweets/652c7766bb5f89a24d35090a
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1MjdkZTA5ZjEzZWU3YTI5NmQ0MmM5MCIsImlhdCI6MTY5NzQxMTQzNCwiZXhwIjoxNjk3NDk3ODM0fQ.OqukM0jIXpUS0gTJ5Jme5c7KiwCW26I0M8OWo7hhhYs

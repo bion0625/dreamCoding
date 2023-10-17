@@ -3,11 +3,11 @@ import { db } from '../db/database.js';
 
 const SELECT_JOIN = `
     SELECT 
-    tw.id, tw.text, tw.created_at as createdAt, tw.user_id as userId, us.username, us.name, us.url 
+    tw.id, tw.text, tw.createdAt, tw.userId, us.username, us.name, us.url 
     FROM tweets as tw 
-    JOIN users as us ON us.id = tw.user_id
+    JOIN users as us ON us.id = tw.userId
 `;
-const ORDER_DESC = `ORDER BY tw.created_at desc`;
+const ORDER_DESC = `ORDER BY tw.createdAt desc`;
 
 export async function getAll(){
     return db
@@ -29,8 +29,8 @@ export async function getById(id){
 
 export async function create(text, userId){
     return db.execute(
-        'INSERT INTO tweets (text, created_at, user_id) VALUES (?,?,?)',
-        [text, new Date(), userId]
+        'INSERT INTO tweets (text, createdAt, updatedAt, userId) VALUES (?,?,?,?)',
+        [text, new Date(), new Date(), userId]
     ).then(result => getById(result[0].insertId));
 }
 

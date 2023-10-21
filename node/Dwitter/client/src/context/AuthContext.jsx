@@ -13,12 +13,12 @@ import Login from '../pages/Login';
 
 const AuthContext = createContext({});
 
-const tokenRef = createRef();
+const contextRef = createRef();
 
 export function AuthProvider({ authService, authErrorEventBus, children }) {
   const [user, setUser] = useState(undefined);
 
-  useImperativeHandle(tokenRef, () => (user ? user.token : undefined));
+  useImperativeHandle(contextRef, () => (user ? user.token : undefined));
 
   useEffect(() => {
     authErrorEventBus.listen((err) => {
@@ -84,5 +84,5 @@ export class AuthErrorEventBus {
 }
 
 export default AuthContext;
-export const fetchToken = () => tokenRef.current;
+export const fetchToken = () => contextRef.current;
 export const useAuth = () => useContext(AuthContext);
